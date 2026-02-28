@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import GraphicsShowcase from "./GraphicsShowcase";
+import VideoShowcase from "./VideoShowcase";
 
 const categories = [
   { title: "Video Edits", description: "Reels, podcasts, montages, music videos, vlogs, TikTok content, and sports highlights." },
@@ -29,24 +32,47 @@ const PortfolioSection = () => {
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {categories.map((cat, i) => (
-            <motion.div
-              key={cat.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="glass-card p-6 group hover:border-primary/50 transition-colors"
-            >
-              <h3 className="font-display text-xl mb-2 group-hover:text-primary transition-colors">
-                {cat.title}
-              </h3>
-              <p className="text-muted-foreground text-sm font-body leading-relaxed">
-                {cat.description}
-              </p>
-            </motion.div>
-          ))}
+          {categories.map((cat, i) => {
+            const isGraphicDesign = cat.title === "Graphic Design";
+            const CardWrapper = isGraphicDesign ? Link : motion.div;
+            const wrapperProps = isGraphicDesign 
+              ? { to: "/graphics", className: "block" }
+              : {};
+
+            return (
+              <motion.div
+                key={cat.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+              >
+                <CardWrapper
+                  {...wrapperProps}
+                  className="glass-card p-6 group hover:border-primary/50 transition-colors block"
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <h3 className="font-display text-xl group-hover:text-primary transition-colors">
+                      {cat.title}
+                    </h3>
+                    {isGraphicDesign && (
+                      <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                    )}
+                  </div>
+                  <p className="text-muted-foreground text-sm font-body leading-relaxed">
+                    {cat.description}
+                  </p>
+                </CardWrapper>
+              </motion.div>
+            );
+          })}
         </div>
+
+        {/* Video Showcase */}
+        <VideoShowcase />
+
+        {/* Graphics Showcase */}
+        <GraphicsShowcase />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
