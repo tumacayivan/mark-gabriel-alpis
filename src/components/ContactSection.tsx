@@ -28,7 +28,7 @@ const ContactSection = () => {
         >
           {[
             { icon: Mail, label: "alpismark09@gmail.com", href: "mailto:alpismark09@gmail.com" },
-            { icon: Phone, label: "+993-099-4087", href: "tel:+9930994087" },
+            { icon: Phone, label: "+63 993 099 4087", href: "https://wa.me/639930994087" },
             { icon: MapPin, label: "Cavite, Philippines", href: "#" },
           ].map((item) => (
             <a

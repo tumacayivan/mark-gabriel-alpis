@@ -23,15 +23,19 @@ const AboutSection = () => {
         >
           <p>
             Creative and detail-oriented Video Editor, Graphic Designer, Web Designer,
-            and Virtual Assistant with a versatile skill set and a proven ability to
-            deliver visually compelling and engaging digital content. Experienced in
-            producing high-quality videos, designing impactful graphics, and developing
-            user-friendly websites that align with brand identity and client goals.
+            Virtual Assistant, and AI Content Specialist with a versatile skill set and a
+            proven ability to deliver visually compelling and engaging digital content.
+            Experienced in producing high-quality videos, designing impactful graphics,
+            developing user-friendly websites, and leveraging AI-powered tools to streamline
+            workflows, enhance creativity, and improve content production efficiency.
           </p>
           <p>
             Proficient in industry-standard tools such as Adobe Creative Suite
             (Premiere Pro, After Effects, Photoshop, Illustrator), Figma, and WordPress,
-            with a strong eye for aesthetics, storytelling, and functionality.
+            along with AI platforms including ChatGPT, HeyGen, ElevenLabs, Veo, Midjourney,
+            Higgsfield and other AI-assisted creative tools. Possesses a strong eye for
+            aesthetics, storytelling, branding, and functionality, with the ability to adapt
+            quickly to evolving digital trends and client needs.
           </p>
         </motion.div>
 
@@ -45,7 +49,7 @@ const AboutSection = () => {
           {[
             { label: "Location", value: "Cavite, Philippines" },
             { label: "Email", value: "alpismark09@gmail.com" },
-            { label: "Phone", value: "+993-099-4087" },
+            { label: "WhatsApp", value: "+63 993 099 4087" },
             { label: "Website", value: "www.reallygreatsite.com" },
             { label: "Languages", value: "English, Tagalog" },
           ].map((item) => (
