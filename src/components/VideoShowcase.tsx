@@ -1,16 +1,14 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Play, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ExternalLink, Play, X, ChevronLeft, ChevronRight, FolderOpen } from "lucide-react";
 import {
   Dialog,
   DialogContent,
 } from "@/components/ui/dialog";
 
 // Convert Google Drive file links to embeddable video URLs
-const getDriveVideoUrl = (fileId: string, autoplay: boolean = false) => {
-  // Google Drive preview URL - autoplay may be limited by browser policies
-  const baseUrl = `https://drive.google.com/file/d/${fileId}/preview`;
-  return baseUrl;
+const getDriveVideoUrl = (fileId: string) => {
+  return `https://drive.google.com/file/d/${fileId}/preview`;
 };
 
 // Video portfolio organized by categories
@@ -31,12 +29,18 @@ const videoCategories = [
     name: "AI Videos",
     folderLink: "https://drive.google.com/drive/folders/1b3b0tTKy3Nihf9dWhKh7PwJk47slfxNE?usp=drive_link",
     videos: [
-      { id: "1Q9pgVMD8RiNDL9zyoOEW0kcHgOdoNW5F", title: "AI Video 1", driveLink: "https://drive.google.com/file/d/1Q9pgVMD8RiNDL9zyoOEW0kcHgOdoNW5F/view?usp=drive_link" },
-      { id: "1-Is5dnzrUG6-DZyjYQpXZuuixfJ52b3a", title: "AI Video 2", driveLink: "https://drive.google.com/file/d/1-Is5dnzrUG6-DZyjYQpXZuuixfJ52b3a/view?usp=drive_link" },
-      { id: "1if7K64dndKsjgCz2QFdPQB0c-PqDlm0y", title: "AI Video 3", driveLink: "https://drive.google.com/file/d/1if7K64dndKsjgCz2QFdPQB0c-PqDlm0y/view?usp=drive_link" },
-      { id: "1olt17wzcihPHojy1IoNZmwHV4DYqJgqZ", title: "AI Video 4", driveLink: "https://drive.google.com/file/d/1olt17wzcihPHojy1IoNZmwHV4DYqJgqZ/view?usp=drive_link" },
-      { id: "1AXFy158z3vNRFKAwKPQQ2OVEIDIRVNgx", title: "AI Video 5", driveLink: "https://drive.google.com/file/d/1AXFy158z3vNRFKAwKPQQ2OVEIDIRVNgx/view?usp=drive_link" },
-      { id: "1spNPNu6P1bme_luNy_DGCmi0V9OHDEh8", title: "AI Video 6", driveLink: "https://drive.google.com/file/d/1spNPNu6P1bme_luNy_DGCmi0V9OHDEh8/view?usp=drive_link" },
+      { id: "1KWH_1w5M8ucKCMTXk_2Zb4NY8nZAG2E4", title: "AI Video 1", driveLink: "https://drive.google.com/file/d/1KWH_1w5M8ucKCMTXk_2Zb4NY8nZAG2E4/view?usp=drive_link" },
+      { id: "1nEdCKHhlAdn86hbTEtyJ-gnom4yrYrbs", title: "AI Video 2", driveLink: "https://drive.google.com/file/d/1nEdCKHhlAdn86hbTEtyJ-gnom4yrYrbs/view?usp=drive_link" },
+      { id: "1YHiFNLl73fHnMqlDPJIMT_taZiy4z-Hx", title: "AI Video 3", driveLink: "https://drive.google.com/file/d/1YHiFNLl73fHnMqlDPJIMT_taZiy4z-Hx/view?usp=drive_link" },
+      { id: "1hUn2uxLs-sjhVbZpOR7MP5YJw2AmHz6D", title: "AI Video 4", driveLink: "https://drive.google.com/file/d/1hUn2uxLs-sjhVbZpOR7MP5YJw2AmHz6D/view?usp=drive_link" },
+      { id: "1Q9pgVMD8RiNDL9zyoOEW0kcHgOdoNW5F", title: "AI Video 5", driveLink: "https://drive.google.com/file/d/1Q9pgVMD8RiNDL9zyoOEW0kcHgOdoNW5F/view?usp=drive_link" },
+      { id: "1Ug8iKJZH_lNklJgxZO5CUO35ugWYsAZD", title: "AI Video 6", driveLink: "https://drive.google.com/file/d/1Ug8iKJZH_lNklJgxZO5CUO35ugWYsAZD/view?usp=drive_link" },
+      { id: "1CUJTuSenwgDUap8e8mNN7ClSVf6TOI2c", title: "AI Video 7", driveLink: "https://drive.google.com/file/d/1CUJTuSenwgDUap8e8mNN7ClSVf6TOI2c/view?usp=drive_link" },
+      { id: "1-Is5dnzrUG6-DZyjYQpXZuuixfJ52b3a", title: "AI Video 8", driveLink: "https://drive.google.com/file/d/1-Is5dnzrUG6-DZyjYQpXZuuixfJ52b3a/view?usp=drive_link" },
+      { id: "1if7K64dndKsjgCz2QFdPQB0c-PqDlm0y", title: "AI Video 9", driveLink: "https://drive.google.com/file/d/1if7K64dndKsjgCz2QFdPQB0c-PqDlm0y/view?usp=drive_link" },
+      { id: "1olt17wzcihPHojy1IoNZmwHV4DYqJgqZ", title: "AI Video 10", driveLink: "https://drive.google.com/file/d/1olt17wzcihPHojy1IoNZmwHV4DYqJgqZ/view?usp=drive_link" },
+      { id: "1AXFy158z3vNRFKAwKPQQ2OVEIDIRVNgx", title: "AI Video 11", driveLink: "https://drive.google.com/file/d/1AXFy158z3vNRFKAwKPQQ2OVEIDIRVNgx/view?usp=drive_link" },
+      { id: "1spNPNu6P1bme_luNy_DGCmi0V9OHDEh8", title: "AI Video 12", driveLink: "https://drive.google.com/file/d/1spNPNu6P1bme_luNy_DGCmi0V9OHDEh8/view?usp=drive_link" },
     ],
   },
   {
@@ -62,7 +66,7 @@ const videoCategories = [
     ],
   },
   {
-    name: "Movie edits",
+    name: "Movie Edits",
     folderLink: "https://drive.google.com/drive/folders/1b3JWd81xJt75xm81qzm3gCAt6QWZ8tL0?usp=drive_link",
     videos: [
       { id: "1yR-kT3RT31pfwW7hz-XPYJweoxnSIUED", title: "Movie Edit 1", driveLink: "https://drive.google.com/file/d/1yR-kT3RT31pfwW7hz-XPYJweoxnSIUED/view?usp=drive_link" },
@@ -73,7 +77,7 @@ const videoCategories = [
     ],
   },
   {
-    name: "music videos",
+    name: "Music Videos",
     folderLink: "https://drive.google.com/drive/folders/1SUyhQpTHHWa9G7NeTOH79LfEmO_Fv3Lt?usp=drive_link",
     videos: [
       { id: "1YaGkUQ6wGJ3zRihCcLl4J41zy1w3jPoL", title: "Music Video 1", driveLink: "https://drive.google.com/file/d/1YaGkUQ6wGJ3zRihCcLl4J41zy1w3jPoL/view?usp=drive_link" },
@@ -82,21 +86,23 @@ const videoCategories = [
       { id: "1LB2F0ny3nN3vwr9VgGan8EDlGSNyCjvQ", title: "Music Video 4", driveLink: "https://drive.google.com/file/d/1LB2F0ny3nN3vwr9VgGan8EDlGSNyCjvQ/view?usp=drive_link" },
       { id: "1RHsdRy9-_ni6Ut1Z-c02Ac7-4YO1cun7", title: "Music Video 5", driveLink: "https://drive.google.com/file/d/1RHsdRy9-_ni6Ut1Z-c02Ac7-4YO1cun7/view?usp=drive_link" },
       { id: "1mbaghd04NZPsZzfTHIkxvRgMf2IeRpGa", title: "Music Video 6", driveLink: "https://drive.google.com/file/d/1mbaghd04NZPsZzfTHIkxvRgMf2IeRpGa/view?usp=drive_link" },
+      { id: "1JG0AenMUDy6Z6EqJlLOFFerGJv8em-a4", title: "Music Video 7", driveLink: "https://drive.google.com/file/d/1JG0AenMUDy6Z6EqJlLOFFerGJv8em-a4/view?usp=drive_link" },
+      { id: "1uWYt7RaoFWx_ZU-FOGvMH5ba85GT91ie", title: "Music Video 8", driveLink: "https://drive.google.com/file/d/1uWYt7RaoFWx_ZU-FOGvMH5ba85GT91ie/view?usp=drive_link" },
     ],
   },
   {
-    name: "Podcast/long form",
+    name: "Podcast / Long Form",
     folderLink: "https://drive.google.com/drive/folders/1s19BEqw_4sjSealtlsv-SUxtxFf2Cbfo?usp=drive_link",
     videos: [
-      { id: "1Z1SdN7ohl88Az4YxifXOa9mcEmtu0au8", title: "Podcast/Long Form 1", driveLink: "https://drive.google.com/file/d/1Z1SdN7ohl88Az4YxifXOa9mcEmtu0au8/view?usp=drive_link" },
-      { id: "1inAXqwnLFXNmhQ6WUpdgJtoYz0VZZUDH", title: "Podcast/Long Form 2", driveLink: "https://drive.google.com/file/d/1inAXqwnLFXNmhQ6WUpdgJtoYz0VZZUDH/view?usp=drive_link" },
-      { id: "1_pn7HONVKK55n8IODsm64I55J2sVognx", title: "Podcast/Long Form 3", driveLink: "https://drive.google.com/file/d/1_pn7HONVKK55n8IODsm64I55J2sVognx/view?usp=drive_link" },
-      { id: "1096Ce1u_COaqtOWxOqwUCPuVBwL2E1i8", title: "Podcast/Long Form 4", driveLink: "https://drive.google.com/file/d/1096Ce1u_COaqtOWxOqwUCPuVBwL2E1i8/view?usp=drive_link" },
-      { id: "13Yu-oZR61IEUWIBWtR6ETalRhqhhcB2-", title: "Podcast/Long Form 5", driveLink: "https://drive.google.com/file/d/13Yu-oZR61IEUWIBWtR6ETalRhqhhcB2-/view?usp=drive_link" },
+      { id: "1Z1SdN7ohl88Az4YxifXOa9mcEmtu0au8", title: "Podcast / Long Form 1", driveLink: "https://drive.google.com/file/d/1Z1SdN7ohl88Az4YxifXOa9mcEmtu0au8/view?usp=drive_link" },
+      { id: "1inAXqwnLFXNmhQ6WUpdgJtoYz0VZZUDH", title: "Podcast / Long Form 2", driveLink: "https://drive.google.com/file/d/1inAXqwnLFXNmhQ6WUpdgJtoYz0VZZUDH/view?usp=drive_link" },
+      { id: "1_pn7HONVKK55n8IODsm64I55J2sVognx", title: "Podcast / Long Form 3", driveLink: "https://drive.google.com/file/d/1_pn7HONVKK55n8IODsm64I55J2sVognx/view?usp=drive_link" },
+      { id: "1096Ce1u_COaqtOWxOqwUCPuVBwL2E1i8", title: "Podcast / Long Form 4", driveLink: "https://drive.google.com/file/d/1096Ce1u_COaqtOWxOqwUCPuVBwL2E1i8/view?usp=drive_link" },
+      { id: "13Yu-oZR61IEUWIBWtR6ETalRhqhhcB2-", title: "Podcast / Long Form 5", driveLink: "https://drive.google.com/file/d/13Yu-oZR61IEUWIBWtR6ETalRhqhhcB2-/view?usp=drive_link" },
     ],
   },
   {
-    name: "Real-Estate",
+    name: "Real Estate",
     folderLink: "https://drive.google.com/drive/folders/1hjiC_yYetjDWx8Hsa4R9RAJcM1MglQPS?usp=sharing",
     videos: [
       { id: "1ca_9p71UUIJZ8zwXGK05Dzah_jjye9Ex", title: "Real Estate 1", driveLink: "https://drive.google.com/file/d/1ca_9p71UUIJZ8zwXGK05Dzah_jjye9Ex/view?usp=drive_link" },
@@ -108,27 +114,27 @@ const videoCategories = [
     ],
   },
   {
-    name: "Reels/TikTok",
+    name: "Reels / TikTok",
     folderLink: "https://drive.google.com/drive/folders/1E4vLV4vdAabAtWPUrwgg_LN8iMU7zFhU?usp=drive_link",
     videos: [
-      { id: "1eyxc-j7SmF_P69DL0oqcFxeCCqjPfscJ", title: "Reel/TikTok 1", driveLink: "https://drive.google.com/file/d/1eyxc-j7SmF_P69DL0oqcFxeCCqjPfscJ/view?usp=sharing" },
-      { id: "1nlx5VSGk7mUeX7YeHmPdDeTTPtLESi7F", title: "Reel/TikTok 2", driveLink: "https://drive.google.com/file/d/1nlx5VSGk7mUeX7YeHmPdDeTTPtLESi7F/view?usp=drive_link" },
-      { id: "17Ep5Ui7fjVt7n8ESuyvIjgk78rRrOOXc", title: "Reel/TikTok 3", driveLink: "https://drive.google.com/file/d/17Ep5Ui7fjVt7n8ESuyvIjgk78rRrOOXc/view?usp=drive_link" },
-      { id: "18ytVl-cjtw6B4xRxOdAh9mRRJ1OMmctG", title: "Reel/TikTok 4", driveLink: "https://drive.google.com/file/d/18ytVl-cjtw6B4xRxOdAh9mRRJ1OMmctG/view?usp=drive_link" },
-      { id: "19Q2bFWr_UBi1H4B7ACf3rLbOdleo6Q14", title: "Reel/TikTok 5", driveLink: "https://drive.google.com/file/d/19Q2bFWr_UBi1H4B7ACf3rLbOdleo6Q14/view?usp=drive_link" },
-      { id: "14kW8MlCCe9JRR9yxPOhnreeZVTbzweUM", title: "Reel/TikTok 6", driveLink: "https://drive.google.com/file/d/14kW8MlCCe9JRR9yxPOhnreeZVTbzweUM/view?usp=drive_link" },
+      { id: "1eyxc-j7SmF_P69DL0oqcFxeCCqjPfscJ", title: "Reel / TikTok 1", driveLink: "https://drive.google.com/file/d/1eyxc-j7SmF_P69DL0oqcFxeCCqjPfscJ/view?usp=sharing" },
+      { id: "1nlx5VSGk7mUeX7YeHmPdDeTTPtLESi7F", title: "Reel / TikTok 2", driveLink: "https://drive.google.com/file/d/1nlx5VSGk7mUeX7YeHmPdDeTTPtLESi7F/view?usp=drive_link" },
+      { id: "17Ep5Ui7fjVt7n8ESuyvIjgk78rRrOOXc", title: "Reel / TikTok 3", driveLink: "https://drive.google.com/file/d/17Ep5Ui7fjVt7n8ESuyvIjgk78rRrOOXc/view?usp=drive_link" },
+      { id: "18ytVl-cjtw6B4xRxOdAh9mRRJ1OMmctG", title: "Reel / TikTok 4", driveLink: "https://drive.google.com/file/d/18ytVl-cjtw6B4xRxOdAh9mRRJ1OMmctG/view?usp=drive_link" },
+      { id: "19Q2bFWr_UBi1H4B7ACf3rLbOdleo6Q14", title: "Reel / TikTok 5", driveLink: "https://drive.google.com/file/d/19Q2bFWr_UBi1H4B7ACf3rLbOdleo6Q14/view?usp=drive_link" },
+      { id: "14kW8MlCCe9JRR9yxPOhnreeZVTbzweUM", title: "Reel / TikTok 6", driveLink: "https://drive.google.com/file/d/14kW8MlCCe9JRR9yxPOhnreeZVTbzweUM/view?usp=drive_link" },
     ],
   },
   {
-    name: "sports/highlights",
+    name: "Sports / Highlights",
     folderLink: "https://drive.google.com/drive/folders/1rf5TmFx6XvQIjBZ0UbfUgO1KdVAJ0v6j?usp=drive_link",
     videos: [
-      { id: "1H2w3qtHauR1zN-nt4N_mqZcaC33nkBaq", title: "Sports/Highlights 1", driveLink: "https://drive.google.com/file/d/1H2w3qtHauR1zN-nt4N_mqZcaC33nkBaq/view?usp=drive_link" },
-      { id: "1F0CQT6RvmSfuhCXC-fIPtatTCQI_1pS5", title: "Sports/Highlights 2", driveLink: "https://drive.google.com/file/d/1F0CQT6RvmSfuhCXC-fIPtatTCQI_1pS5/view?usp=drive_link" },
-      { id: "136gM5511VQNTcgL_1_RYL2LuIipt-EN6", title: "Sports/Highlights 3", driveLink: "https://drive.google.com/file/d/136gM5511VQNTcgL_1_RYL2LuIipt-EN6/view?usp=drive_link" },
-      { id: "1J3m-u_NMVATKcdAu5FHhw5WbskyumEaS", title: "Sports/Highlights 4", driveLink: "https://drive.google.com/file/d/1J3m-u_NMVATKcdAu5FHhw5WbskyumEaS/view?usp=drive_link" },
-      { id: "14XnfXNfgYCbQeeU8ht-a_a0Rww5YkoXD", title: "Sports/Highlights 5", driveLink: "https://drive.google.com/file/d/14XnfXNfgYCbQeeU8ht-a_a0Rww5YkoXD/view?usp=drive_link" },
-      { id: "1Abi3ekD2RycaM7NbNOabQy_796Gxtb8m", title: "Sports/Highlights 6", driveLink: "https://drive.google.com/file/d/1Abi3ekD2RycaM7NbNOabQy_796Gxtb8m/view?usp=drive_link" },
+      { id: "1H2w3qtHauR1zN-nt4N_mqZcaC33nkBaq", title: "Sports / Highlights 1", driveLink: "https://drive.google.com/file/d/1H2w3qtHauR1zN-nt4N_mqZcaC33nkBaq/view?usp=drive_link" },
+      { id: "1F0CQT6RvmSfuhCXC-fIPtatTCQI_1pS5", title: "Sports / Highlights 2", driveLink: "https://drive.google.com/file/d/1F0CQT6RvmSfuhCXC-fIPtatTCQI_1pS5/view?usp=drive_link" },
+      { id: "136gM5511VQNTcgL_1_RYL2LuIipt-EN6", title: "Sports / Highlights 3", driveLink: "https://drive.google.com/file/d/136gM5511VQNTcgL_1_RYL2LuIipt-EN6/view?usp=drive_link" },
+      { id: "1J3m-u_NMVATKcdAu5FHhw5WbskyumEaS", title: "Sports / Highlights 4", driveLink: "https://drive.google.com/file/d/1J3m-u_NMVATKcdAu5FHhw5WbskyumEaS/view?usp=drive_link" },
+      { id: "14XnfXNfgYCbQeeU8ht-a_a0Rww5YkoXD", title: "Sports / Highlights 5", driveLink: "https://drive.google.com/file/d/14XnfXNfgYCbQeeU8ht-a_a0Rww5YkoXD/view?usp=drive_link" },
+      { id: "1Abi3ekD2RycaM7NbNOabQy_796Gxtb8m", title: "Sports / Highlights 6", driveLink: "https://drive.google.com/file/d/1Abi3ekD2RycaM7NbNOabQy_796Gxtb8m/view?usp=drive_link" },
     ],
   },
   {
@@ -139,13 +145,12 @@ const videoCategories = [
       { id: "1_mmVVN9k3hAVUh4nHozWLux7Z6FgeKbr", title: "Vlog 2", driveLink: "https://drive.google.com/file/d/1_mmVVN9k3hAVUh4nHozWLux7Z6FgeKbr/view?usp=drive_link" },
       { id: "1-dWkdFfQo3sjhqnUan-6aJGmLYTL3v5t", title: "Vlog 3", driveLink: "https://drive.google.com/file/d/1-dWkdFfQo3sjhqnUan-6aJGmLYTL3v5t/view?usp=drive_link" },
       { id: "1f_w0sbqlcxm7MURvei4J2m0A4mVbNqwq", title: "Vlog 4", driveLink: "https://drive.google.com/file/d/1f_w0sbqlcxm7MURvei4J2m0A4mVbNqwq/view?usp=drive_link" },
-      { id: "1A_Oh9kC8HiZBzBT9iHJ2pOV2JA2GYxm8", title: "Vlog 5", driveLink: "https://drive.google.com/file/d/1A_Oh9kC8HiZBzBT9iHJ2pOV2JA2GYxm8/view?usp=drive_link" },
     ],
   },
 ];
 
-// Flatten all videos for the showcase
-const videoFiles = videoCategories.flatMap(category => category.videos);
+// Flatten all videos for lightbox navigation, keeping a global index
+const videoFiles = videoCategories.flatMap((category) => category.videos);
 
 const VideoShowcase = () => {
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
@@ -162,6 +167,9 @@ const VideoShowcase = () => {
     }
   };
 
+  // Track a running global index so each category card maps to the flat array
+  let globalIndex = -1;
+
   return (
     <>
       <motion.div
@@ -174,41 +182,66 @@ const VideoShowcase = () => {
         <h3 className="font-display text-3xl md:text-4xl mb-4 text-center">
           Featured Videos
         </h3>
-        <p className="text-muted-foreground text-center mb-8 font-body max-w-2xl mx-auto">
-          A selection of video edits, reels, montages, and creative video content with autoplay previews.
+        <p className="text-muted-foreground text-center mb-12 font-body max-w-2xl mx-auto">
+          A selection of video edits organized by category — reels, montages, music
+          videos, AI videos, and more.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {videoFiles.map((video, index) => (
-            <motion.div
-              key={video.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="group relative overflow-hidden rounded-lg glass-card cursor-pointer aspect-video"
-              onClick={() => setSelectedVideo(index)}
-            >
-              <div className="w-full h-full relative bg-secondary/20">
-                <iframe
-                  src={getDriveVideoUrl(video.id, true)}
-                  title={video.title}
-                  className="w-full h-full"
-                  allow="autoplay; encrypted-media; fullscreen"
-                  allowFullScreen
-                  loading="lazy"
-                  style={{ pointerEvents: 'none' }}
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="flex items-center gap-2 text-white">
-                    <Play className="w-8 h-8" />
-                    <span className="font-body text-sm font-semibold">Click to view fullscreen</span>
-                  </div>
-                </div>
+
+        <div className="space-y-16">
+          {videoCategories.map((category) => (
+            <div key={category.name}>
+              <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
+                <h4 className="font-display text-2xl md:text-3xl">{category.name}</h4>
+                <a
+                  href={category.folderLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors font-body"
+                >
+                  <FolderOpen className="w-4 h-4" />
+                  View folder
+                </a>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                <p className="text-white font-body text-xs">{video.title}</p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {category.videos.map((video) => {
+                  globalIndex += 1;
+                  const index = globalIndex;
+                  return (
+                    <motion.div
+                      key={video.id}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4 }}
+                      className="group relative overflow-hidden rounded-lg glass-card cursor-pointer aspect-[9/16]"
+                      onClick={() => setSelectedVideo(index)}
+                    >
+                      <div className="w-full h-full relative bg-secondary/20">
+                        <iframe
+                          src={getDriveVideoUrl(video.id)}
+                          title={video.title}
+                          className="w-full h-full"
+                          allow="autoplay; encrypted-media; fullscreen"
+                          allowFullScreen
+                          loading="lazy"
+                          style={{ pointerEvents: "none" }}
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <div className="flex flex-col items-center gap-2 text-white">
+                            <Play className="w-8 h-8" />
+                            <span className="font-body text-xs font-semibold">View</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <p className="text-white font-body text-xs">{video.title}</p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </motion.div>
@@ -216,7 +249,7 @@ const VideoShowcase = () => {
       <AnimatePresence>
         {selectedVideo !== null && (
           <Dialog open={selectedVideo !== null} onOpenChange={() => setSelectedVideo(null)}>
-            <DialogContent className="max-w-6xl w-full p-0 bg-transparent border-none">
+            <DialogContent className="max-w-md w-full p-0 bg-transparent border-none">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -229,7 +262,7 @@ const VideoShowcase = () => {
                 >
                   <X className="w-6 h-6" />
                 </button>
-                
+
                 {videoFiles.length > 1 && (
                   <>
                     <button
@@ -237,7 +270,7 @@ const VideoShowcase = () => {
                         e.stopPropagation();
                         prevVideo();
                       }}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-primary transition-colors z-10 bg-black/50 rounded-full p-3 hover:bg-black/70"
+                      className="absolute -left-4 sm:-left-14 top-1/2 -translate-y-1/2 text-white hover:text-primary transition-colors z-10 bg-black/50 rounded-full p-3 hover:bg-black/70"
                       aria-label="Previous video"
                     >
                       <ChevronLeft className="w-6 h-6" />
@@ -247,7 +280,7 @@ const VideoShowcase = () => {
                         e.stopPropagation();
                         nextVideo();
                       }}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-primary transition-colors z-10 bg-black/50 rounded-full p-3 hover:bg-black/70"
+                      className="absolute -right-4 sm:-right-14 top-1/2 -translate-y-1/2 text-white hover:text-primary transition-colors z-10 bg-black/50 rounded-full p-3 hover:bg-black/70"
                       aria-label="Next video"
                     >
                       <ChevronRight className="w-6 h-6" />
@@ -256,29 +289,29 @@ const VideoShowcase = () => {
                 )}
 
                 <div className="relative">
-                  <div className="aspect-video w-full bg-black rounded-lg overflow-hidden">
+                  <div className="aspect-[9/16] w-full bg-black rounded-lg overflow-hidden">
                     <iframe
-                      src={getDriveVideoUrl(videoFiles[selectedVideo].id, true)}
+                      src={getDriveVideoUrl(videoFiles[selectedVideo].id)}
                       title={videoFiles[selectedVideo].title}
                       className="w-full h-full"
                       allow="autoplay; encrypted-media; fullscreen"
                       allowFullScreen
                     />
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 rounded-b-lg">
-                    <div className="flex items-center justify-between">
-                      <p className="text-white font-body text-base">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 rounded-b-lg">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-white font-body text-sm">
                         {videoFiles[selectedVideo].title}
                       </p>
                       <a
                         href={videoFiles[selectedVideo].driveLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-white hover:text-primary transition-colors text-sm"
+                        className="inline-flex items-center gap-1 text-white hover:text-primary transition-colors text-xs whitespace-nowrap"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        Open in Google Drive
-                        <ExternalLink className="w-4 h-4" />
+                        Open in Drive
+                        <ExternalLink className="w-3 h-3" />
                       </a>
                     </div>
                     {videoFiles.length > 1 && (
