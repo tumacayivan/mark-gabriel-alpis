@@ -2,6 +2,20 @@ import { motion } from "framer-motion";
 
 const experiences = [
   {
+    title: "Video Editor & Social Media Manager",
+    company: "Heaven Bound",
+    period: "2025–Present",
+    description:
+      "Video Editor and Social Media Manager for Heaven Bound, responsible for editing music videos, promotional content, and engaging short-form videos for Instagram and other social media platforms. Managed multiple social media accounts, ensuring consistent branding, audience engagement, and content scheduling. Experienced in editing short-form content for artists such as Kolbe and 4KL (Kendrick), creating visually engaging reels and promotional clips optimized for social media growth and audience retention.",
+  },
+  {
+    title: "Video Editor & AI Specialist",
+    company: "CAM Production",
+    period: "2025–Present",
+    description:
+      "Video Editor and AI Specialist at CAM Production, specializing in creating cinematic films and high-quality visual content using AI-powered creative tools such as Higgsfield. Experienced in AI-assisted video production, storytelling, visual effects, and editing workflows to produce engaging and modern digital content. Skilled in combining traditional video editing techniques with AI-generated visuals to create cinematic short films, promotional videos, and social media content that align with creative direction and audience engagement goals.",
+  },
+  {
     title: "Graphic Designer and Video Editor",
     company: "Rovawork Philippines",
     period: "2021–2023",
